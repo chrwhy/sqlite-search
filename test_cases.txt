@@ -1,0 +1,68 @@
+select id, simple_highlight(t1, 1, '[', ']') from t1 where text match "@";
+
+
+select simple_highlight(t1, 0, '[', ']') from t1 where x match ("[@]");
+
+
+select * from t1 where x match (english* AND "@" AND """" AND "'" AND "'")
+
+
+select * from t1 where x match '"@"';
+
+
+
+OK
+select id, simple_highlight(t1, 1, '[', ']')  from t1 where text match '"@"';
+
+select id, simple_highlight(t1, 1, '[', ']')  from t1 where text match '"$"';
+
+select id, simple_highlight(t1, 1, '[', ']')  from t1 where text match '"chrwhy@"';
+
+select id, simple_highlight(t1, 1, '[', ']')  from t1 where text match ('"chrwhy"');
+
+select id, simple_highlight(t1, 1, '[', ']')  from t1 where text match ('"chrw"');
+
+select id, simple_highlight(t1, 1, '[', ']')  from t1 where text match ('"chrwhy" OR "@" OR"gmail"');
+
+select id, simple_highlight(t1, 1, '[', ']')  from t1 where text match (' "@" OR "chrwhy"');
+
+select id, simple_highlight(t1, 1, '[', ']')  from t1 where text match ('"chrwhy" OR "gmail"');
+
+select id, simple_highlight(t1, 1, '[', ']') from t1 where text match ('liv+av+n OR liv+an OR liav+n OR lian OR lian');
+
+select id, simple_highlight(t1, 1, '[', ']') from t1 where text match ('lian');
+
+
+NOT OK
+
+
+
+
+
+
+
+.load libsimple
+
+select '启用拼音分词：';
+-- set tokenize to simple
+CREATE VIRTUAL TABLE t1 USING fts5(id, text, tokenize = 'simple');
+
+insert into t1(id, text) values (0, '周杰伦 Jay Chou:最美的不是下雨天，是曾与你躲过雨的屋檐');
+insert into t1(id, text) values (1, 'I love China! 我爱中国!');
+insert into t1(id, text) values (2, '@English &special _characters."''bacon-&and''-eggs%');
+insert into t1(id, text) values (3, 'chrwhy@gmail.com');
+insert into t1(id, text) values (4, '中装行');
+insert into t1(id, text) values (5, '啊陈陈');
+insert into t1(id, text) values (6, '中转箱');
+insert into t1(id, text) values (7, '李安"');
+insert into t1(id, text) values (8, '西安');
+insert into t1(id, text) values (9, '周星驰');
+insert into t1(id, text) values (10, '李荟');
+insert into t1(id, text) values (11, '刘慧子');
+insert into t1(id, text) values (12, '刘亚男');
+insert into t1(id, text) values (12, '张强');
+insert into t1(id, text) values (12, '张倩格');
+insert into t1(id, text) values (13, '练习');
+insert into t1(id, text) values (13, '吕布');
+insert into t1(id, text) values (13, '绿色');
+insert into t1(id, text) values (13, '驴子');
